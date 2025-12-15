@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Health Plus{% endblock %}
+
+{% block content %}
+<!-- Modern Hero Section -->
+<div class="relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
+        <div class="absolute top-40 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-1/2 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div class="text-center">
+            <!-- Badge -->
+            <div class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-semibold mb-6 animate-fade-in">
+                <i class="fas fa-shield-alt mr-2"></i>
+                <span>14 Comprehensive Health Assessments</span>
+            </div>
+
+            <!-- Main Headline -->
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4 animate-fade-in-up">
+                Take Control of Your
+                <span class="block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-pink-300 to-white animate-gradient">
+                    Health Journey
+                </span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="text-lg md:text-xl text-white/90 max-w-3xl mx-auto mb-6 animate-fade-in-up animation-delay-200">
+                Get instant, comprehensive health insights with our advanced assessment platform. 
+                <span class="font-semibold">14 key metrics</span> evaluated in minutes, not days.
+            </p>
+
+            <!-- Key Benefits -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8 text-white/90 animate-fade-in-up animation-delay-400">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle text-green-300"></i>
+                    <span class="font-medium text-sm md:text-base">No Lab Required</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle text-green-300"></i>
+                    <span class="font-medium text-sm md:text-base">Instant Results</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle text-green-300"></i>
+                    <span class="font-medium text-sm md:text-base">100% Free</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle text-green-300"></i>
+                    <span class="font-medium text-sm md:text-base">Privacy Protected</span>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-10 animate-fade-in-up animation-delay-600">
+                <a href="{{ url_for('assessments') }}" class="group relative px-8 py-4 bg-white text-blue-600 font-bold text-lg rounded-xl shadow-2xl transform hover:scale-110 transition duration-300 hover:shadow-white/50">
+                    <span class="relative z-10 flex items-center">
+                        <i class="fas fa-rocket mr-2"></i>
+                        Start Your Assessment Now
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 to-pink-400 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                </a>
+                <a href="{{ url_for('sample_results') }}" class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold text-lg rounded-xl border-2 border-white/30 hover:bg-white/20 hover:border-white/50 transition duration-300">
+                    <i class="fas fa-chart-line mr-2"></i>
+                    View Sample Results
+                </a>
+            </div>
+
+            <!-- Statistics -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto animate-fade-in-up animation-delay-800">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-5 border border-white/20">
+                    <div class="text-3xl md:text-4xl font-bold text-white mb-1">14</div>
+                    <div class="text-white/80 text-xs md:text-sm font-medium">Health Metrics</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-5 border border-white/20">
+                    <div class="text-3xl md:text-4xl font-bold text-white mb-1">5</div>
+                    <div class="text-white/80 text-xs md:text-sm font-medium">Minutes</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-5 border border-white/20">
+                    <div class="text-3xl md:text-4xl font-bold text-white mb-1">100%</div>
+                    <div class="text-white/80 text-xs md:text-sm font-medium">Free Access</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-5 border border-white/20">
+                    <div class="text-3xl md:text-4xl font-bold text-white mb-1">24/7</div>
+                    <div class="text-white/80 text-xs md:text-sm font-medium">Available</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <i class="fas fa-chevron-down text-white/60 text-xl"></i>
+    </div>
+</div>
+
+<!-- Additional Styles for Animations -->
+<style>
+    @keyframes blob {
+        0%, 100% {
+            transform: translate(0px, 0px) scale(1);
+        }
+        33% {
+            transform: translate(30px, -50px) scale(1.1);
+        }
+        66% {
+            transform: translate(-20px, 20px) scale(0.9);
+        }
+    }
+    
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+    
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+    
+    .animation-delay-4000 {
+        animation-delay: 4s;
+    }
+    
+    .animate-fade-in {
+        animation: fade-in 1s ease-out;
+    }
+    
+    .animate-fade-in-up {
+        animation: fade-in-up 0.8s ease-out forwards;
+        opacity: 0;
+    }
+    
+    .animation-delay-200 {
+        animation-delay: 0.2s;
+    }
+    
+    .animation-delay-400 {
+        animation-delay: 0.4s;
+    }
+    
+    .animation-delay-600 {
+        animation-delay: 0.6s;
+    }
+    
+    .animation-delay-800 {
+        animation-delay: 0.8s;
+    }
+    
+    .animate-gradient {
+        background-size: 200% auto;
+        animation: gradient 3s ease infinite;
+    }
+    
+    @keyframes gradient {
+        0%, 100% {
+            background-position: 0% center;
+        }
+        50% {
+            background-position: 100% center;
+        }
+    }
+</style>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <!-- Features Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <!-- Feature 1 -->
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+            <div class="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-weight text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Body Metrics</h3>
+            <p class="text-gray-600">BMI, body composition, and body fat percentage assessment.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+            <div class="bg-red-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-heartbeat text-red-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Cardiovascular Health</h3>
+            <p class="text-gray-600">Blood pressure monitoring and stroke risk assessment.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+            <div class="bg-green-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-lungs text-green-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Respiratory Health</h3>
+            <p class="text-gray-600">Blood oxygen saturation (SpO₂) evaluation.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+            <div class="bg-purple-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-dumbbell text-purple-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Physical Fitness</h3>
+            <p class="text-gray-600">Resting heart rate and grip strength assessment.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+            <div class="bg-yellow-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-brain text-yellow-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Mental Health</h3>
+            <p class="text-gray-600">PHQ-9 depression screening questionnaire.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+            <div class="bg-indigo-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-eye text-indigo-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Vision & Hearing</h3>
+            <p class="text-gray-600">Visual acuity and hearing screening tests.</p>
+        </div>
+    </div>
+
+    <!-- Assessment Categories -->
+    <div class="bg-white rounded-2xl shadow-xl p-8 mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Available Assessments</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <a href="{{ url_for('assessment_form', assessment_type='bmi') }}" class="block p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">BMI</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='cardiovascular') }}" class="block p-4 bg-gradient-to-br from-red-50 to-red-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Cardiovascular</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='stroke-risk') }}" class="block p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Stroke Risk</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='metabolic') }}" class="block p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Metabolic</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='respiratory') }}" class="block p-4 bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Respiratory</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='fitness') }}" class="block p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Fitness</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='body-composition') }}" class="block p-4 bg-gradient-to-br from-pink-50 to-pink-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Body Composition</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='posture') }}" class="block p-4 bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Posture</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='mental-health') }}" class="block p-4 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Mental Health</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='temperature') }}" class="block p-4 bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Temperature</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='grip-strength') }}" class="block p-4 bg-gradient-to-br from-lime-50 to-lime-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Grip Strength</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='lifestyle') }}" class="block p-4 bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Lifestyle</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='vision') }}" class="block p-4 bg-gradient-to-br from-violet-50 to-violet-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Vision</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='hearing') }}" class="block p-4 bg-gradient-to-br from-rose-50 to-rose-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Hearing</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-2xl p-12 text-center text-white">
+        <h2 class="text-4xl font-bold mb-4">Ready to Start Your Health Journey?</h2>
+        <p class="text-xl mb-8 opacity-90">Take our comprehensive assessments and get detailed insights into your health.</p>
+        <a href="{{ url_for('assessments') }}" class="bg-white text-blue-600 font-bold py-4 px-10 rounded-lg shadow-lg hover:bg-gray-100 transform hover:scale-105 transition duration-200 inline-block">
+            Begin Assessment
+        </a>
+    </div>
+</div>
+{% endblock %}
+

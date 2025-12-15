@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Respiratory Health Assessment - Health Plus{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+        <div class="text-center mb-8">
+            <div class="bg-teal-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-lungs text-teal-600 text-3xl"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Respiratory Health Assessment</h1>
+            <p class="text-gray-600">Blood Oxygen Saturation (SpO₂) Evaluation</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('submit_assessment', assessment_type='respiratory') }}" class="space-y-6">
+            <div>
+                <label for="spo2" class="block text-sm font-medium text-gray-700 mb-2">
+                    Blood Oxygen Saturation (SpO₂) (%)
+                </label>
+                <input type="number" id="spo2" name="spo2" min="0" max="100" required
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                       placeholder="Enter SpO₂ percentage (e.g., 98)">
+                <p class="mt-2 text-sm text-gray-500">Normal range: 95-100%</p>
+            </div>
+
+            <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-200">
+                Assess Respiratory Health
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

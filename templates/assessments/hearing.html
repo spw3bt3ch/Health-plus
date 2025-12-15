@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+
+{% block title %}Hearing Assessment - Health Plus{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+        <div class="text-center mb-8">
+            <div class="bg-rose-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-deaf text-rose-600 text-3xl"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Hearing Assessment</h1>
+            <p class="text-gray-600">Pure-Tone Hearing Screening</p>
+        </div>
+
+        <!-- Instructions -->
+        <div class="bg-rose-50 border border-rose-200 rounded-lg p-4 mb-6">
+            <p class="text-sm text-gray-700 mb-2"><strong>Instructions:</strong></p>
+            <ul class="text-sm text-gray-600 space-y-1 list-disc list-inside">
+                <li>Use headphones or earbuds for best results</li>
+                <li>Find a quiet environment</li>
+                <li>For each frequency, click "Play Tone" and adjust the volume slider</li>
+                <li>Start from the current volume level and adjust until you can hear the tone</li>
+                <li>Click "I Can Hear" when you first detect the sound at that volume level</li>
+                <li>Click "Cannot Hear" if you cannot hear the tone even at maximum volume (100 dB HL)</li>
+                <li>Normal hearing threshold: ≤25 dB HL (Hearing Level)</li>
+            </ul>
+        </div>
+
+        <form method="POST" action="{{ url_for('submit_assessment', assessment_type='hearing') }}" class="space-y-6">
+            <!-- Frequency Test Cards -->
+            <div class="space-y-4">
+                {% set frequencies = [
+                    {'freq': 250, 'label': '250 Hz', 'name': 'freq_250', 'desc': 'Low frequency (bass)', 'start_vol': 30, 'min': 0, 'max': 100},
+                    {'freq': 500, 'label': '500 Hz', 'name': 'freq_500', 'desc': 'Low-mid frequency', 'start_vol': 25, 'min': 0, 'max': 100},
+                    {'freq': 1000, 'label': '1000 Hz', 'name': 'freq_1000', 'desc': 'Mid frequency (speech range)', 'start_vol': 20, 'min': 0, 'max': 100},
+                    {'freq': 2000, 'label': '2000 Hz', 'name': 'freq_2000', 'desc': 'High-mid frequency', 'start_vol': 25, 'min': 0, 'max': 100},
+                    {'freq': 4000, 'label': '4000 Hz', 'name': 'freq_4000', 'desc': 'High frequency (treble)', 'start_vol': 25, 'min': 0, 'max': 100}
+                ] %}
+                
+                {% for freq_data in frequencies %}
+                <div class="border-2 border-gray-200 rounded-xl p-6 hover:border-rose-300 transition" data-freq="{{ freq_data.freq }}">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ freq_data.label }}</h3>
+                            <p class="text-sm text-gray-500">{{ freq_data.desc }}</p>
+                        </div>
+                        
+                        <div class="flex flex-col md:flex-row items-start md:items-center gap-3 flex-1">
+                            <!-- Volume Control -->
+                            <div class="flex-1 w-full md:w-auto">
+                                <label class="block text-xs text-gray-600 mb-1">Volume: <span id="volume-{{ freq_data.freq }}">{{ freq_data.start_vol }}</span> dB HL</label>
+                                <input type="range" 
+                                       id="volume-slider-{{ freq_data.freq }}" 
+                                       min="{{ freq_data.min }}" 
+                                       max="{{ freq_data.max }}" 
+                                       value="{{ freq_data.start_vol }}" 
+                                       step="5"
+                                       class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                                       oninput="updateVolume({{ freq_data.freq }}, this.value)">
+                            </div>
+                            
+                            <!-- Play/Stop Button -->
+                            <button type="button" 
+                                    onclick="playTone({{ freq_data.freq }})" 
+                                    id="play-btn-{{ freq_data.freq }}"
+                                    class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg transition flex items-center gap-2">
+                                <i class="fas fa-volume-up"></i>
+                                <span>Play Tone</span>
+                            </button>
+                            
+                            <!-- Can Hear Button -->
+                            <button type="button" 
+                                    onclick="setThreshold({{ freq_data.freq }}, true)" 
+                                    id="hear-btn-{{ freq_data.freq }}"
+                                    class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition flex items-center gap-2">
+                                <i class="fas fa-check"></i>
+                                <span>I Can Hear</span>
+                            </button>
+                            
+                            <!-- Cannot Hear Button -->
+                            <button type="button" 
+                                    onclick="setThreshold({{ freq_data.freq }}, false)" 
+                                    id="no-hear-btn-{{ freq_data.freq }}"
+                                    class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition flex items-center gap-2">
+                                <i class="fas fa-times"></i>
+                                <span>Cannot Hear</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Current Threshold Display -->
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600">Your threshold:</span>
+                            <span id="threshold-{{ freq_data.freq }}" class="text-lg font-bold text-rose-600">Not tested</span>
+                            <input type="hidden" 
+                                   id="freq_{{ freq_data.freq }}" 
+                                   name="{{ freq_data.name }}" 
+                                   value=""
+                                   required>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" id="submit-btn" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                Complete Hearing Assessment
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    let audioContext = null;
+    let oscillators = {};
+    let thresholds = {};
+
+    // Initialize AudioContext (required for Web Audio API)
+    function initAudioContext() {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+    }
+
+    function updateVolume(freq, dbValue) {
+        document.getElementById(`volume-${freq}`).textContent = dbValue;
+        if (oscillators[freq]) {
+            const gainNode = oscillators[freq].gainNode;
+            const volume = dbToGain(dbValue);
+            gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+        }
+    }
+
+    function dbToGain(db) {
+        // Convert dB to gain (0-1 range)
+        // Normal hearing threshold is around -20 dB, so we scale accordingly
+        return Math.pow(10, (db - 80) / 20);
+    }
+
+    function playTone(frequency) {
+        initAudioContext();
+        
+        const playBtn = document.getElementById(`play-btn-${frequency}`);
+        const volumeSlider = document.getElementById(`volume-slider-${frequency}`);
+        const dbValue = parseInt(volumeSlider.value);
+        const volume = dbToGain(dbValue);
+
+        // Stop any existing tone at this frequency
+        stopTone(frequency);
+
+        // Create oscillator
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+        gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 2); // Play for 2 seconds
+
+        oscillators[frequency] = { oscillator, gainNode };
+
+        // Update button state
+        playBtn.innerHTML = '<i class="fas fa-stop"></i> <span>Playing...</span>';
+        playBtn.classList.remove('bg-rose-600', 'hover:bg-rose-700');
+        playBtn.classList.add('bg-gray-600');
+
+        // Reset button after 2 seconds
+        setTimeout(() => {
+            stopTone(frequency);
+        }, 2000);
+    }
+
+    function stopTone(frequency) {
+        if (oscillators[frequency]) {
+            try {
+                oscillators[frequency].oscillator.stop();
+            } catch(e) {
+                // Oscillator may already be stopped
+            }
+            delete oscillators[frequency];
+        }
+
+        const playBtn = document.getElementById(`play-btn-${frequency}`);
+        playBtn.innerHTML = '<i class="fas fa-volume-up"></i> <span>Play Tone</span>';
+        playBtn.classList.remove('bg-gray-600');
+        playBtn.classList.add('bg-rose-600', 'hover:bg-rose-700');
+    }
+
+    function setThreshold(frequency, canHear) {
+        const volumeSlider = document.getElementById(`volume-slider-${frequency}`);
+        const inputField = document.getElementById(`freq_${frequency}`);
+        const thresholdDisplay = document.getElementById(`threshold-${frequency}`);
+        const hearBtn = document.getElementById(`hear-btn-${frequency}`);
+        const noHearBtn = document.getElementById(`no-hear-btn-${frequency}`);
+        
+        let dbValue;
+        if (canHear) {
+            // User can hear at current volume level
+            dbValue = parseInt(volumeSlider.value);
+            thresholds[frequency] = dbValue;
+            
+            // Update button states
+            hearBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+            hearBtn.classList.add('bg-green-700', 'ring-2', 'ring-green-400');
+            noHearBtn.classList.remove('bg-red-700', 'ring-2', 'ring-red-400');
+            noHearBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+        } else {
+            // User cannot hear even at maximum volume
+            const maxValue = parseInt(volumeSlider.max);
+            dbValue = maxValue; // Set to maximum (100 dB HL)
+            thresholds[frequency] = dbValue;
+            
+            // Move slider to max to show it was tested at maximum
+            volumeSlider.value = maxValue;
+            updateVolume(frequency, maxValue);
+            
+            // Update button states
+            noHearBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+            noHearBtn.classList.add('bg-red-700', 'ring-2', 'ring-red-400');
+            hearBtn.classList.remove('bg-green-700', 'ring-2', 'ring-green-400');
+            hearBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+        }
+        
+        inputField.value = dbValue;
+        
+        if (canHear) {
+            if (dbValue <= 25) {
+                thresholdDisplay.textContent = `${dbValue} dB HL (Normal)`;
+                thresholdDisplay.classList.remove('text-red-600', 'text-yellow-600');
+                thresholdDisplay.classList.add('text-green-600');
+            } else if (dbValue <= 40) {
+                thresholdDisplay.textContent = `${dbValue} dB HL (Mild)`;
+                thresholdDisplay.classList.remove('text-red-600', 'text-green-600');
+                thresholdDisplay.classList.add('text-yellow-600');
+            } else {
+                thresholdDisplay.textContent = `${dbValue} dB HL (Moderate+)`;
+                thresholdDisplay.classList.remove('text-green-600', 'text-yellow-600');
+                thresholdDisplay.classList.add('text-red-600');
+            }
+        } else {
+            thresholdDisplay.textContent = `${dbValue} dB HL (Cannot Hear)`;
+            thresholdDisplay.classList.remove('text-green-600', 'text-yellow-600');
+            thresholdDisplay.classList.add('text-red-600');
+        }
+
+        // Stop the tone
+        stopTone(frequency);
+
+        // Check if all thresholds are set
+        checkAllThresholdsSet();
+    }
+
+    function checkAllThresholdsSet() {
+        const requiredFreqs = [250, 500, 1000, 2000, 4000];
+        const allSet = requiredFreqs.every(freq => {
+            const inputField = document.getElementById(`freq_${freq}`);
+            return inputField && inputField.value !== '';
+        });
+        
+        const submitBtn = document.getElementById('submit-btn');
+        if (allSet) {
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        } else {
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+    }
+
+    // Initialize check on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        checkAllThresholdsSet();
+    });
+
+    // Stop all tones when page unloads
+    window.addEventListener('beforeunload', function() {
+        [250, 500, 1000, 2000, 4000].forEach(freq => stopTone(freq));
+    });
+</script>
+{% endblock %}
+

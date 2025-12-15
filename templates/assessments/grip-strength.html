@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Grip Strength Assessment - Health Plus{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+        <div class="text-center mb-8">
+            <div class="bg-lime-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-hand-paper text-lime-600 text-3xl"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Grip Strength Assessment</h1>
+            <p class="text-gray-600">Functional Health Evaluation</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('submit_assessment', assessment_type='grip-strength') }}" class="space-y-6">
+            <div>
+                <label for="grip_strength" class="block text-sm font-medium text-gray-700 mb-2">
+                    Grip Strength (kg)
+                </label>
+                <input type="number" step="0.1" id="grip_strength" name="grip_strength" required
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500"
+                       placeholder="Enter grip strength in kilograms">
+                <p class="mt-2 text-sm text-gray-500">Measure using a hand dynamometer</p>
+            </div>
+
+            <div>
+                <label for="gender" class="block text-sm font-medium text-gray-700 mb-2">
+                    Gender
+                </label>
+                <select id="gender" name="gender" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500">
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="age" class="block text-sm font-medium text-gray-700 mb-2">
+                    Age
+                </label>
+                <input type="number" id="age" name="age" required
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500"
+                       placeholder="Enter your age">
+            </div>
+
+            <button type="submit" class="w-full bg-lime-600 hover:bg-lime-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-200">
+                Assess Grip Strength
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

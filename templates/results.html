@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+
+{% block title %}Assessment Results - Health Plus{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 print-container">
+    {% if is_sample %}
+    <div class="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl p-4 mb-6 shadow-lg">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-info-circle text-2xl"></i>
+                <div>
+                    <h3 class="font-bold text-lg">Sample Results</h3>
+                    <p class="text-sm opacity-90">These are demonstration results. Complete your own assessments to see your personalized health data.</p>
+                </div>
+            </div>
+            <a href="{{ url_for('assessments') }}" class="bg-white text-blue-600 font-semibold px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+                Start Your Assessment
+            </a>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Assessment Results</h1>
+            <p class="text-gray-600">{% if is_sample %}Sample health assessment results{% else %}View your health assessment results{% endif %}</p>
+        </div>
+        <div class="flex space-x-4">
+            <a href="{{ url_for('assessments') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition">
+                New Assessment
+            </a>
+            {% set has_assessed = false %}
+            {% for assessment_type, data in results.items() %}
+                {% if data is not none %}
+                    {% set has_assessed = true %}
+                {% endif %}
+            {% endfor %}
+            {% if has_assessed %}
+            <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition flex items-center gap-2">
+                <i class="fas fa-download"></i>
+                Download/Print
+            </button>
+            <a href="{{ url_for('clear_session') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-lg shadow-lg transition">
+                Clear All
+            </a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% set has_any_results = false %}
+    {% for assessment_type, data in results.items() %}
+        {% if data is not none %}
+            {% set has_any_results = true %}
+        {% endif %}
+    {% endfor %}
+    
+    {% if not has_any_results %}
+    <div class="bg-white rounded-2xl shadow-xl p-12 text-center">
+        <i class="fas fa-clipboard-list text-gray-400 text-6xl mb-4"></i>
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">No Assessment Results Yet</h2>
+        <p class="text-gray-600 mb-8">Complete some assessments to see your results here, or view sample results to see what the assessments provide.</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="{{ url_for('assessments') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg inline-block">
+                Start Assessment
+            </a>
+            <a href="{{ url_for('sample_results') }}" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg inline-block">
+                <i class="fas fa-eye mr-2"></i>
+                View Sample Results
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="results-container">
+        {% for assessment_type, data in results.items() %}
+        {% set is_assessed = data is not none %}
+        {% if is_assessed %}
+        {% set result = data.result %}
+        {% set type_display = assessment_type.replace('-', ' ').title() %}
+        <div class="assessment-card bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6 border-2 border-transparent">
+            
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold text-gray-900">{{ type_display }}</h3>
+                {% if assessment_type == 'bmi' %}
+                    <i class="fas fa-weight text-blue-600 text-2xl"></i>
+                {% elif assessment_type == 'cardiovascular' %}
+                    <i class="fas fa-heartbeat text-red-600 text-2xl"></i>
+                {% elif assessment_type == 'stroke-risk' %}
+                    <i class="fas fa-exclamation-triangle text-orange-600 text-2xl"></i>
+                {% elif assessment_type == 'metabolic' %}
+                    <i class="fas fa-chart-line text-green-600 text-2xl"></i>
+                {% elif assessment_type == 'respiratory' %}
+                    <i class="fas fa-lungs text-teal-600 text-2xl"></i>
+                {% elif assessment_type == 'fitness' %}
+                    <i class="fas fa-dumbbell text-purple-600 text-2xl"></i>
+                {% elif assessment_type == 'body-composition' %}
+                    <i class="fas fa-user-circle text-pink-600 text-2xl"></i>
+                {% elif assessment_type == 'posture' %}
+                    <i class="fas fa-user text-indigo-600 text-2xl"></i>
+                {% elif assessment_type == 'mental-health' %}
+                    <i class="fas fa-brain text-yellow-600 text-2xl"></i>
+                {% elif assessment_type == 'temperature' %}
+                    <i class="fas fa-thermometer-half text-cyan-600 text-2xl"></i>
+                {% elif assessment_type == 'grip-strength' %}
+                    <i class="fas fa-hand-paper text-lime-600 text-2xl"></i>
+                {% elif assessment_type == 'lifestyle' %}
+                    <i class="fas fa-smoking text-amber-600 text-2xl"></i>
+                {% elif assessment_type == 'vision' %}
+                    <i class="fas fa-eye text-violet-600 text-2xl"></i>
+                {% elif assessment_type == 'hearing' %}
+                    <i class="fas fa-deaf text-rose-600 text-2xl"></i>
+                {% endif %}
+            </div>
+
+            <div class="space-y-2">
+                {% if assessment_type == 'bmi' %}
+                    <p class="text-3xl font-bold text-blue-600">{{ result.value }}</p>
+                    <p class="text-gray-700">{{ result.category }}</p>
+                {% elif assessment_type == 'cardiovascular' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
+                    <p class="text-gray-600">Risk Level: <span class="font-semibold">{{ result.risk }}</span></p>
+                {% elif assessment_type == 'stroke-risk' %}
+                    <p class="text-xl font-semibold text-gray-800">Risk Score: {{ result.score }}</p>
+                    <p class="text-gray-600">Risk Level: <span class="font-semibold">{{ result.risk }}</span></p>
+                {% elif assessment_type == 'metabolic' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
+                    <p class="text-gray-600">Risk Factors: {{ result.factors }}</p>
+                {% elif assessment_type == 'respiratory' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
+                    <p class="text-gray-600">SpO₂: {{ result.spo2 }}%</p>
+                {% elif assessment_type == 'fitness' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
+                    <p class="text-gray-600">HR Zone: {{ result.hr_zone }}</p>
+                {% elif assessment_type == 'body-composition' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
+                    <p class="text-gray-600">Body Fat: {{ result.percentage }}%</p>
+                {% elif assessment_type == 'posture' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
+                    <p class="text-gray-600">Score: {{ result.score }}/10</p>
+                {% elif assessment_type == 'mental-health' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.severity }}</p>
+                    <p class="text-gray-600">PHQ-9 Score: {{ result.score }}</p>
+                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
+                {% elif assessment_type == 'temperature' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
+                    <p class="text-gray-600">Temperature: {{ result.temperature }}°C</p>
+                {% elif assessment_type == 'grip-strength' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
+                    <p class="text-gray-600">Strength: {{ result.strength }} kg</p>
+                {% elif assessment_type == 'lifestyle' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
+                    <p class="text-gray-600">Risk Score: {{ result.risk_score }}</p>
+                {% elif assessment_type == 'vision' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
+                    <p class="text-gray-600">Acuity: {{ result.acuity }}</p>
+                {% elif assessment_type == 'hearing' %}
+                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
+                    <p class="text-gray-600">Normal Frequencies: {{ result.normal_frequencies }}/5</p>
+                {% endif %}
+            </div>
+
+            <p class="text-xs text-gray-400 mt-4">
+                <i class="far fa-clock mr-1"></i>
+                {{ data.timestamp[:10] }}
+            </p>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Print Styles -->
+<style>
+    @media print {
+        /* Hide navigation, footer, and sample banners */
+        nav, footer, .no-print, 
+        .bg-gradient-to-r.from-blue-500,
+        div[class*="bg-gradient-to-r"]:not(.print-header) {
+            display: none !important;
+        }
+        
+        
+        /* Hide all buttons and links */
+        button, 
+        a[href*="assessment"], 
+        a[href*="clear"],
+        .flex.space-x-4 {
+            display: none !important;
+        }
+        
+        /* Hide action buttons container */
+        .flex.justify-between.items-center.mb-8 > div:last-child {
+            display: none !important;
+        }
+        
+        /* Page setup */
+        @page {
+            margin: 1.5cm;
+            size: letter;
+        }
+        
+        body {
+            background: white !important;
+            color: black !important;
+            font-size: 12pt;
+        }
+        
+        /* Ensure cards print nicely */
+        .assessment-card {
+            page-break-inside: avoid;
+            break-inside: avoid;
+            border: 1px solid #ccc !important;
+            box-shadow: none !important;
+            margin-bottom: 15px;
+            padding: 15px;
+        }
+        
+        /* Grid layout for print */
+        #results-container {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 15px !important;
+        }
+        
+        /* Header for print */
+        .print-header {
+            display: block !important;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #000;
+        }
+        
+        .print-header h1 {
+            font-size: 28px;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+        
+        .print-header p {
+            font-size: 14px;
+            margin: 5px 0;
+            color: #333;
+        }
+        
+        .print-date {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        /* Improve text visibility */
+        .text-gray-600, .text-gray-700, .text-gray-800 {
+            color: #333 !important;
+        }
+        
+        /* Make icons visible but smaller */
+        i.fas, i.far {
+            font-size: 16px !important;
+        }
+        
+        /* Hide timestamp in print (already in header) */
+        .text-xs.text-gray-400 {
+            display: none !important;
+        }
+    }
+    
+    /* Screen-only header */
+    .print-header {
+        display: none;
+    }
+    
+    /* Print-specific header */
+    @media print {
+        .print-header {
+            display: block !important;
+        }
+    }
+</style>
+
+<!-- Print Header -->
+<div class="print-header">
+    <h1>Health Assessment Results</h1>
+    <p>Health Plus - Comprehensive Health Assessment Platform</p>
+    <p class="print-date">Generated: <span id="print-date-value"></span></p>
+    {% if is_sample %}
+    <p style="color: #dc2626; font-weight: bold;">SAMPLE RESULTS - For Demonstration Purposes Only</p>
+    {% endif %}
+</div>
+
+<script>
+    // Update print date dynamically
+    document.addEventListener('DOMContentLoaded', function() {
+        const printDateSpan = document.getElementById('print-date-value');
+        if (printDateSpan) {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            printDateSpan.textContent = dateStr;
+        }
+    });
+</script>
+{% endblock %}
+

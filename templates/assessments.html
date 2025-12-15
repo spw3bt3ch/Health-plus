@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}Assessments - Health Plus{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">Health Assessments</h1>
+        <p class="text-xl text-gray-600">Choose an assessment to begin evaluating your health metrics</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- BMI Assessment -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-weight text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">BMI Assessment</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Calculate your Body Mass Index based on weight and height measurements.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='bmi') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Cardiovascular Health -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-red-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-heartbeat text-red-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Cardiovascular Health</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Assess your cardiovascular health based on blood pressure readings.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='cardiovascular') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Stroke Risk -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-orange-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-exclamation-triangle text-orange-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Stroke Risk Assessment</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Non-laboratory score to evaluate your stroke risk factors.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='stroke-risk') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Metabolic Health -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-green-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-chart-line text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Metabolic Health</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Non-invasive assessment of metabolic health indicators.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='metabolic') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Respiratory Health -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-teal-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-lungs text-teal-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Respiratory Health</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Evaluate blood oxygen saturation (SpO₂) levels.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='respiratory') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Physical Fitness -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-dumbbell text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Physical Fitness</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Assess fitness level based on resting heart rate.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='fitness') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Body Composition -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-pink-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-user-circle text-pink-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Body Composition</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Body fat percentage assessment using BIA measurements.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='body-composition') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Posture Assessment -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-indigo-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-user text-indigo-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Posture Assessment</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Bone & musculoskeletal health evaluation.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='posture') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Mental Health -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-brain text-yellow-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Mental Health</h3>
+            </div>
+            <p class="text-gray-600 mb-4">PHQ-9 depression screening questionnaire.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='mental-health') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Body Temperature -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-cyan-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-thermometer-half text-cyan-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Body Temperature</h3>
+            </div>
+            <p class="text-gray-600 mb-4">General wellness assessment based on body temperature.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='temperature') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Grip Strength -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-lime-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-hand-paper text-lime-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Grip Strength</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Functional health assessment through grip strength testing.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='grip-strength') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Lifestyle & Risk -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-amber-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-smoking text-amber-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Lifestyle & Risk</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Smoking status and physical activity questionnaire.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='lifestyle') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Vision -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-violet-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-eye text-violet-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Vision Test</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Visual acuity test using Snellen chart principles.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='vision') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Hearing -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-rose-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-deaf text-rose-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Hearing Screening</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Pure-tone hearing screening test.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='hearing') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
