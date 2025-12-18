@@ -21,29 +21,41 @@
     </div>
     {% endif %}
     
-    <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-8 gap-4">
+    <div class="flex justify-between items-center mb-8">
         <div>
-            <h1 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2">Assessment Results</h1>
-            <p class="text-sm md:text-base text-gray-600">{% if is_sample %}Sample health assessment results{% else %}View your health assessment results{% endif %}</p>
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Assessment Results</h1>
+            <p class="text-gray-600">{% if is_sample %}Sample health assessment results{% else %}View your health assessment results{% endif %}</p>
         </div>
-        <div class="flex flex-wrap gap-2 md:space-x-4">
-            <a href="{{ url_for('assessments') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 md:px-6 rounded-lg shadow-lg transition text-sm md:text-base">
+        <div class="flex space-x-4">
+            <a href="{{ url_for('assessments') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition">
                 New Assessment
             </a>
-            {% if results and results|length > 0 %}
-            <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 md:px-6 rounded-lg shadow-lg transition flex items-center gap-2 text-sm md:text-base">
+            {% set has_assessed = false %}
+            {% for assessment_type, data in results.items() %}
+                {% if data is not none %}
+                    {% set has_assessed = true %}
+                {% endif %}
+            {% endfor %}
+            {% if has_assessed %}
+            <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-lg shadow-lg transition flex items-center gap-2">
                 <i class="fas fa-download"></i>
-                <span class="hidden sm:inline">Download/Print</span>
-                <span class="sm:hidden">Print</span>
+                Download/Print
             </button>
-            <a href="{{ url_for('clear_session') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 md:px-6 rounded-lg shadow-lg transition text-sm md:text-base">
+            <a href="{{ url_for('clear_session') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-lg shadow-lg transition">
                 Clear All
             </a>
             {% endif %}
         </div>
     </div>
 
-    {% if not results or results|length == 0 %}
+    {% set has_any_results = false %}
+    {% for assessment_type, data in results.items() %}
+        {% if data is not none %}
+            {% set has_any_results = true %}
+        {% endif %}
+    {% endfor %}
+    
+    {% if not has_any_results %}
     <div class="bg-white rounded-2xl shadow-xl p-12 text-center">
         <i class="fas fa-clipboard-list text-gray-400 text-6xl mb-4"></i>
         <h2 class="text-2xl font-semibold text-gray-700 mb-4">No Assessment Results Yet</h2>
@@ -61,6 +73,8 @@
     {% else %}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="results-container">
         {% for assessment_type, data in results.items() %}
+        {% set is_assessed = data is not none %}
+        {% if is_assessed %}
         {% set result = data.result %}
         {% set type_display = assessment_type.replace('-', ' ').title() %}
         <div class="assessment-card bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6 border-2 border-transparent">
@@ -95,28 +109,6 @@
                     <i class="fas fa-eye text-violet-600 text-2xl"></i>
                 {% elif assessment_type == 'hearing' %}
                     <i class="fas fa-deaf text-rose-600 text-2xl"></i>
-                {% elif assessment_type == 'prostate' %}
-                    <i class="fas fa-male text-slate-600 text-2xl"></i>
-                {% elif assessment_type == 'hiv' %}
-                    <i class="fas fa-shield-virus text-emerald-600 text-2xl"></i>
-                {% elif assessment_type == 'pregnancy' %}
-                    <i class="fas fa-baby text-fuchsia-600 text-2xl"></i>
-                {% elif assessment_type == 'breast-cancer' %}
-                    <i class="fas fa-ribbon text-pink-600 text-2xl"></i>
-                {% elif assessment_type == 'tuberculosis' %}
-                    <i class="fas fa-lungs text-amber-600 text-2xl"></i>
-                {% elif assessment_type == 'covid19' %}
-                    <i class="fas fa-virus text-red-600 text-2xl"></i>
-                {% elif assessment_type == 'malaria' %}
-                    <i class="fas fa-bug text-green-600 text-2xl"></i>
-                {% elif assessment_type == 'liver-problem' %}
-                    <i class="fas fa-stethoscope text-yellow-600 text-2xl"></i>
-                {% elif assessment_type == 'hepatitis-b' %}
-                    <i class="fas fa-virus text-orange-600 text-2xl"></i>
-                {% elif assessment_type == 'diabetes' %}
-                    <i class="fas fa-syringe text-indigo-600 text-2xl"></i>
-                {% elif assessment_type == 'hydration' %}
-                    <i class="fas fa-tint text-cyan-600 text-2xl"></i>
                 {% endif %}
             </div>
 
@@ -164,63 +156,15 @@
                 {% elif assessment_type == 'hearing' %}
                     <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
                     <p class="text-gray-600">Normal Frequencies: {{ result.normal_frequencies }}/5</p>
-                {% elif assessment_type == 'prostate' %}
-                    <p class="text-xl font-semibold text-gray-800">Risk Level: {{ result.risk }}</p>
-                    <p class="text-gray-600">Risk Score: {{ result.risk_score }}</p>
-                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
-                {% elif assessment_type == 'hiv' %}
-                    <p class="text-xl font-semibold text-gray-800">Risk Level: {{ result.risk }}</p>
-                    <p class="text-gray-600">Risk Score: {{ result.risk_score }}</p>
-                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
-                {% elif assessment_type == 'pregnancy' %}
-                    <p class="text-xl font-semibold text-gray-800">{{ result.trimester }}</p>
-                    <p class="text-gray-600">{{ result.weeks }} weeks - Risk: {{ result.risk }}</p>
-                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
-                {% elif assessment_type == 'breast-cancer' %}
-                    <p class="text-xl font-semibold text-gray-800">Risk Level: {{ result.risk }}</p>
-                    <p class="text-gray-600">Risk Score: {{ result.risk_score }}</p>
-                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
-                {% elif assessment_type == 'tuberculosis' %}
-                    <p class="text-xl font-semibold text-gray-800">Risk Level: {{ result.risk }}</p>
-                    <p class="text-gray-600">Risk Score: {{ result.risk_score }}</p>
-                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
-                {% elif assessment_type == 'covid19' %}
-                    <p class="text-xl font-semibold text-gray-800">Risk Level: {{ result.risk }}</p>
-                    <p class="text-gray-600">Risk Score: {{ result.risk_score }}</p>
-                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
-                {% elif assessment_type == 'malaria' %}
-                    <p class="text-xl font-semibold text-gray-800">Risk Level: {{ result.risk }}</p>
-                    <p class="text-gray-600">Risk Score: {{ result.risk_score }}</p>
-                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
-                {% elif assessment_type == 'liver-problem' %}
-                    <p class="text-xl font-semibold text-gray-800">Risk Level: {{ result.risk }}</p>
-                    <p class="text-gray-600">Risk Score: {{ result.risk_score }}</p>
-                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
-                {% elif assessment_type == 'hepatitis-b' %}
-                    <p class="text-xl font-semibold text-gray-800">Risk Level: {{ result.risk }}</p>
-                    <p class="text-gray-600">Risk Score: {{ result.risk_score }}</p>
-                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
-                {% elif assessment_type == 'diabetes' %}
-                    <p class="text-xl font-semibold text-gray-800">Risk Level: {{ result.risk }}</p>
-                    <p class="text-gray-600">Risk Score: {{ result.risk_score }}</p>
-                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
-                {% elif assessment_type == 'hydration' %}
-                    <p class="text-xl font-semibold text-gray-800">{{ result.status }}</p>
-                    <p class="text-gray-600">Hydration Score: {{ result.hydration_score }}</p>
-                    <p class="text-sm text-gray-500 mt-2">{{ result.recommendation }}</p>
                 {% endif %}
             </div>
-
-            {# Display Medical Report #}
-            {% if data.medical_report %}
-                {{ data.medical_report|safe }}
-            {% endif %}
 
             <p class="text-xs text-gray-400 mt-4">
                 <i class="far fa-clock mr-1"></i>
                 {{ data.timestamp[:10] }}
             </p>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
     {% endif %}

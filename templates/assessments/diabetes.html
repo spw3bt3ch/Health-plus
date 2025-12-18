@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Diabetes Risk Assessment - Health Plus{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+        <div class="text-center mb-6 md:mb-8">
+            <div class="bg-indigo-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-syringe text-indigo-600 text-2xl md:text-3xl"></i>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Diabetes Risk Assessment</h1>
+            <p class="text-sm md:text-base text-gray-600">Evaluate your diabetes risk factors</p>
+        </div>
+
+        <!-- Information Box -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg mb-6">
+            <div class="flex items-start">
+                <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-0.5"></i>
+                <div>
+                    <h3 class="font-semibold text-blue-900 mb-2">No Tests Required</h3>
+                    <p class="text-sm text-blue-800">This assessment evaluates your diabetes risk based on age, family history, symptoms, BMI, and lifestyle factors. You don't need any prior blood glucose tests to complete this assessment.</p>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('submit_assessment', assessment_type='diabetes') }}" class="space-y-6">
+            <div>
+                <label for="age" class="block text-sm font-medium text-gray-700 mb-2">
+                    Age
+                </label>
+                <input type="number" id="age" name="age" required min="1" max="100"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                       placeholder="Enter your age">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Family History of Diabetes
+                </label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="family_history" value="no" checked class="mr-2">
+                        <span>No family history</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="family_history" value="yes" class="mr-2">
+                        <span>Yes, family history of diabetes (parent, sibling)</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Current Symptoms
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600 mb-2"><strong>Common diabetes symptoms:</strong></p>
+                    <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                        <li>Increased thirst</li>
+                        <li>Frequent urination</li>
+                        <li>Extreme hunger</li>
+                        <li>Unexplained weight loss</li>
+                        <li>Fatigue</li>
+                        <li>Blurred vision</li>
+                        <li>Slow-healing sores</li>
+                        <li>Frequent infections</li>
+                        <li>Tingling or numbness in hands/feet</li>
+                    </ul>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="symptoms" value="no" checked class="mr-2">
+                        <span>No symptoms</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="symptoms" value="yes" class="mr-2">
+                        <span>Yes, experiencing one or more symptoms</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label for="bmi_category" class="block text-sm font-medium text-gray-700 mb-2">
+                    BMI Category (if known)
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600">If you don't know your BMI, you can take our BMI assessment first, or select "Normal weight" if you're unsure.</p>
+                </div>
+                <select id="bmi_category" name="bmi_category" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="Underweight">Underweight</option>
+                    <option value="Normal weight" selected>Normal weight</option>
+                    <option value="Overweight">Overweight</option>
+                    <option value="Obese">Obese</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="physical_activity" class="block text-sm font-medium text-gray-700 mb-2">
+                    Physical Activity Level
+                </label>
+                <select id="physical_activity" name="physical_activity" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="high">High (150+ minutes/week of moderate activity)</option>
+                    <option value="moderate" selected>Moderate (some regular activity)</option>
+                    <option value="low">Low (minimal physical activity)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    High Blood Pressure
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600">Have you been told you have high blood pressure or hypertension?</p>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="blood_pressure" value="no" checked class="mr-2">
+                        <span>No</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="blood_pressure" value="yes" class="mr-2">
+                        <span>Yes</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-200">
+                Assess Risk
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

@@ -4,9 +4,9 @@
 
 {% block content %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-gray-900 mb-4">Health Assessments</h1>
-        <p class="text-xl text-gray-600">Choose an assessment to begin evaluating your health metrics</p>
+    <div class="text-center mb-8 md:mb-12">
+        <h1 class="text-2xl md:text-4xl font-bold text-gray-900 mb-2 md:mb-4">Health Assessments</h1>
+        <p class="text-base md:text-xl text-gray-600 px-4">Choose an assessment to begin evaluating your health metrics</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -202,6 +202,160 @@
             </div>
             <p class="text-gray-600 mb-4">Pure-tone hearing screening test.</p>
             <a href="{{ url_for('assessment_form', assessment_type='hearing') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Prostate Cancer Risk -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-slate-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-male text-slate-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Prostate Cancer Risk</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Evaluate your prostate cancer risk factors.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='prostate') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- HIV Risk -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-emerald-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-shield-virus text-emerald-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">HIV Risk Assessment</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Evaluate your HIV risk factors confidentially.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='hiv') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Pregnancy Health -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-fuchsia-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-baby text-fuchsia-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Pregnancy Health</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Assess your pregnancy health and risk factors.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='pregnancy') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Breast Cancer Risk -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-pink-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-ribbon text-pink-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Breast Cancer Risk</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Evaluate your breast cancer risk factors.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='breast-cancer') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Tuberculosis Risk -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-amber-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-lungs text-amber-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Tuberculosis Risk</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Evaluate your TB risk factors and symptoms.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='tuberculosis') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- COVID-19 Risk -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-red-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-virus text-red-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">COVID-19 Risk</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Evaluate your COVID-19 risk factors and symptoms.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='covid19') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Malaria Risk -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-green-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-bug text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Malaria Risk</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Evaluate your malaria risk based on travel and symptoms.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='malaria') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Liver Health -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-stethoscope text-yellow-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Liver Health</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Evaluate your liver health risk factors.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='liver-problem') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Hepatitis B Risk -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-orange-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-virus text-orange-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Hepatitis B Risk</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Evaluate your Hepatitis B risk factors.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='hepatitis-b') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Diabetes Risk -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-indigo-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-syringe text-indigo-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Diabetes Risk</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Evaluate your diabetes risk factors.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='diabetes') }}" class="text-blue-600 font-semibold hover:text-blue-700">
+                Start Assessment <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <!-- Hydration & Fluid Balance -->
+        <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition p-6">
+            <div class="flex items-center mb-4">
+                <div class="bg-cyan-100 p-3 rounded-lg mr-4">
+                    <i class="fas fa-tint text-cyan-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900">Hydration & Fluid Balance</h3>
+            </div>
+            <p class="text-gray-600 mb-4">Evaluate your hydration status and fluid balance.</p>
+            <a href="{{ url_for('assessment_form', assessment_type='hydration') }}" class="text-blue-600 font-semibold hover:text-blue-700">
                 Start Assessment <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </div>

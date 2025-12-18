@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Breast Cancer Risk Assessment - Health Plus{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+        <div class="text-center mb-6 md:mb-8">
+            <div class="bg-pink-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-ribbon text-pink-600 text-2xl md:text-3xl"></i>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Breast Cancer Risk Assessment</h1>
+            <p class="text-sm md:text-base text-gray-600">Evaluate your breast cancer risk factors</p>
+        </div>
+
+        <!-- Information Box -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg mb-6">
+            <div class="flex items-start">
+                <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-0.5"></i>
+                <div>
+                    <h3 class="font-semibold text-blue-900 mb-2">No Tests Required</h3>
+                    <p class="text-sm text-blue-800">This assessment evaluates your risk based on age, family history, and other factors you can answer yourself. You don't need any prior medical tests, mammograms, or genetic testing results to complete this assessment. If you know your breast density from a previous mammogram, you can include it, but it's optional.</p>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('submit_assessment', assessment_type='breast-cancer') }}" class="space-y-6">
+            <div>
+                <label for="age" class="block text-sm font-medium text-gray-700 mb-2">
+                    Age
+                </label>
+                <input type="number" id="age" name="age" required min="18" max="100"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+                       placeholder="Enter your age">
+            </div>
+
+            <div>
+                <label for="family_history" class="block text-sm font-medium text-gray-700 mb-2">
+                    Family History of Breast Cancer
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600 mb-2"><strong>Understanding family history:</strong></p>
+                    <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                        <li><strong>First-degree relative:</strong> Mother, sister, or daughter who had breast cancer</li>
+                        <li><strong>Second-degree relative:</strong> Aunt, grandmother, or cousin who had breast cancer</li>
+                        <li><strong>No family history:</strong> No known relatives with breast cancer</li>
+                    </ul>
+                </div>
+                <select id="family_history" name="family_history" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500">
+                    <option value="none">No family history</option>
+                    <option value="second_degree">Second-degree relative (aunt, grandmother)</option>
+                    <option value="first_degree">First-degree relative (mother, sister, daughter)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Genetic Factors
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600 mb-2"><strong>What are genetic factors?</strong></p>
+                    <p class="text-xs text-gray-600">Genetic mutations like BRCA1, BRCA2, or other known genetic mutations that increase breast cancer risk. You would know this if you've had genetic testing done, or if multiple family members have had breast or ovarian cancer at a young age.</p>
+                    <p class="text-xs text-gray-600 mt-2"><strong>Don't know?</strong> Select "No known genetic factors" - you don't need genetic testing to complete this assessment.</p>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="genetic_factors" value="no" checked class="mr-2">
+                        <span>No known genetic factors (or not tested)</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="genetic_factors" value="yes" class="mr-2">
+                        <span>Yes, I have known genetic mutations (BRCA1, BRCA2, etc.)</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Previous Breast Biopsy (atypical hyperplasia, etc.)
+                </label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="previous_biopsy" value="no" checked class="mr-2">
+                        <span>No previous biopsy</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="previous_biopsy" value="yes" class="mr-2">
+                        <span>Yes, previous biopsy with abnormal findings</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label for="breast_density" class="block text-sm font-medium text-gray-700 mb-2">
+                    Breast Density
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600 mb-2"><strong>What is breast density?</strong></p>
+                    <p class="text-xs text-gray-600">Breast density refers to the amount of fibrous and glandular tissue in your breasts compared to fatty tissue. This is typically reported on mammogram results.</p>
+                    <p class="text-xs text-gray-600 mt-2"><strong>Don't know your breast density?</strong> Select "Unknown/Not available" - this is perfectly fine! You can still complete the assessment.</p>
+                </div>
+                <select id="breast_density" name="breast_density" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500">
+                    <option value="normal">Normal/Low density</option>
+                    <option value="high">High density</option>
+                    <option value="unknown" selected>Unknown/Not available (most common)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Hormonal Factors (early menarche, late menopause, etc.)
+                </label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="hormonal_factors" value="no" checked class="mr-2">
+                        <span>No significant hormonal factors</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="hormonal_factors" value="yes" class="mr-2">
+                        <span>Yes, significant hormonal factors</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-200">
+                Assess Risk
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

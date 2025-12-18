@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Tuberculosis Risk Assessment - Health Plus{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+        <div class="text-center mb-6 md:mb-8">
+            <div class="bg-amber-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-lungs text-amber-600 text-2xl md:text-3xl"></i>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Tuberculosis Risk Assessment</h1>
+            <p class="text-sm md:text-base text-gray-600">Evaluate your TB risk factors</p>
+        </div>
+
+        <!-- Information Box -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg mb-6">
+            <div class="flex items-start">
+                <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-0.5"></i>
+                <div>
+                    <h3 class="font-semibold text-blue-900 mb-2">No Tests Required</h3>
+                    <p class="text-sm text-blue-800">This assessment evaluates your TB risk based on symptoms, exposure history, and risk factors. You don't need any prior medical tests to complete this assessment.</p>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('submit_assessment', assessment_type='tuberculosis') }}" class="space-y-6">
+            <div>
+                <label for="age" class="block text-sm font-medium text-gray-700 mb-2">
+                    Age
+                </label>
+                <input type="number" id="age" name="age" required min="1" max="100"
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                       placeholder="Enter your age">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Current Symptoms
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600 mb-2"><strong>Common TB symptoms:</strong></p>
+                    <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                        <li>Persistent cough (lasting 3+ weeks)</li>
+                        <li>Coughing up blood or sputum</li>
+                        <li>Chest pain</li>
+                        <li>Unintentional weight loss</li>
+                        <li>Fatigue or weakness</li>
+                        <li>Fever</li>
+                        <li>Night sweats</li>
+                        <li>Loss of appetite</li>
+                    </ul>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="symptoms" value="no" checked class="mr-2">
+                        <span>No symptoms</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="symptoms" value="yes" class="mr-2">
+                        <span>Yes, experiencing one or more symptoms</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Exposure to TB
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600">Have you been in close contact with someone who has active TB, or lived/worked in areas with high TB rates?</p>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="exposure" value="no" checked class="mr-2">
+                        <span>No known exposure</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="exposure" value="yes" class="mr-2">
+                        <span>Yes, possible exposure</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Immunocompromised Status
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600">Do you have conditions that weaken your immune system (HIV, diabetes, cancer treatment, organ transplant, certain medications)?</p>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="immunocompromised" value="no" checked class="mr-2">
+                        <span>No</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="immunocompromised" value="yes" class="mr-2">
+                        <span>Yes</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Previous TB Infection
+                </label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="previous_tb" value="no" checked class="mr-2">
+                        <span>No previous TB infection</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="previous_tb" value="yes" class="mr-2">
+                        <span>Yes, previous TB infection</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-200">
+                Assess Risk
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

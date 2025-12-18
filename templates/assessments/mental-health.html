@@ -4,17 +4,40 @@
 
 {% block content %}
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="bg-white rounded-2xl shadow-xl p-8">
-        <div class="text-center mb-8">
-            <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-brain text-yellow-600 text-3xl"></i>
+    <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+        <div class="text-center mb-6 md:mb-8">
+            <div class="bg-yellow-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-brain text-yellow-600 text-2xl md:text-3xl"></i>
             </div>
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Mental Health Assessment</h1>
-            <p class="text-gray-600">PHQ-9 Depression Screening</p>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Mental Health Assessment</h1>
+            <p class="text-sm md:text-base text-gray-600">PHQ-9 Depression Screening</p>
+        </div>
+
+        <!-- Information Box -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg mb-6">
+            <div class="flex items-start">
+                <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-0.5"></i>
+                <div>
+                    <h3 class="font-semibold text-blue-900 mb-2">No Tests Required</h3>
+                    <p class="text-sm text-blue-800">This is the PHQ-9 (Patient Health Questionnaire-9), a widely used screening tool for depression. It's based on your own observations and feelings - no medical tests or lab work needed. Simply answer based on how you've been feeling over the past 2 weeks.</p>
+                </div>
+            </div>
         </div>
 
         <form method="POST" action="{{ url_for('submit_assessment', assessment_type='mental-health') }}" class="space-y-6">
-            <p class="text-sm text-gray-600 mb-6">Over the last 2 weeks, how often have you been bothered by the following problems? (0 = Not at all, 1 = Several days, 2 = More than half the days, 3 = Nearly every day)</p>
+            <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                <p class="text-sm font-medium text-gray-700 mb-2">📋 <strong>Instructions:</strong></p>
+                <p class="text-sm text-gray-600 mb-3">Over the <strong>last 2 weeks</strong>, how often have you been bothered by the following problems?</p>
+                <div class="bg-white p-3 rounded border border-gray-200">
+                    <p class="text-xs text-gray-600 mb-2"><strong>Rating Scale:</strong></p>
+                    <ul class="text-xs text-gray-600 space-y-1">
+                        <li><strong>0 - Not at all:</strong> Never experienced this</li>
+                        <li><strong>1 - Several days:</strong> Experienced this on 1-6 days</li>
+                        <li><strong>2 - More than half the days:</strong> Experienced this on 7-11 days</li>
+                        <li><strong>3 - Nearly every day:</strong> Experienced this on 12-14 days</li>
+                    </ul>
+                </div>
+            </div>
             
             <div class="space-y-4">
                 {% set questions = [

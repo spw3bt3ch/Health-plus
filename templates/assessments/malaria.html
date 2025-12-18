@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}Malaria Risk Assessment - Health Plus{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+        <div class="text-center mb-6 md:mb-8">
+            <div class="bg-green-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-bug text-green-600 text-2xl md:text-3xl"></i>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Malaria Risk Assessment</h1>
+            <p class="text-sm md:text-base text-gray-600">Evaluate your malaria risk factors</p>
+        </div>
+
+        <!-- Information Box -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg mb-6">
+            <div class="flex items-start">
+                <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-0.5"></i>
+                <div>
+                    <h3 class="font-semibold text-blue-900 mb-2">No Tests Required</h3>
+                    <p class="text-sm text-blue-800">This assessment evaluates your malaria risk based on symptoms, travel history, and exposure. You don't need any prior medical tests to complete this assessment.</p>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('submit_assessment', assessment_type='malaria') }}" class="space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Current Symptoms
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600 mb-2"><strong>Common malaria symptoms:</strong></p>
+                    <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                        <li>Fever (often cyclical - every 48-72 hours)</li>
+                        <li>Chills and shivering</li>
+                        <li>Sweating</li>
+                        <li>Headache</li>
+                        <li>Muscle aches</li>
+                        <li>Fatigue</li>
+                        <li>Nausea and vomiting</li>
+                        <li>Diarrhea</li>
+                        <li>Anemia (pale skin, weakness)</li>
+                    </ul>
+                    <p class="text-xs text-gray-600 mt-2"><strong>Note:</strong> Symptoms typically appear 10-15 days after being bitten by an infected mosquito, but can appear up to a year later.</p>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="symptoms" value="no" checked class="mr-2">
+                        <span>No symptoms</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="symptoms" value="yes" class="mr-2">
+                        <span>Yes, experiencing one or more symptoms</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Travel to Malaria-Endemic Areas
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600">Have you traveled to areas where malaria is common (parts of Africa, Asia, Central/South America) in the past year?</p>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="travel_history" value="no" checked class="mr-2">
+                        <span>No recent travel to endemic areas</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="travel_history" value="yes" class="mr-2">
+                        <span>Yes, traveled to endemic areas</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Residence in Malaria-Endemic Area
+                </label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="area_residence" value="no" checked class="mr-2">
+                        <span>No, do not live in endemic area</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="area_residence" value="yes" class="mr-2">
+                        <span>Yes, live in endemic area</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Previous Malaria Infection
+                </label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="previous_malaria" value="no" checked class="mr-2">
+                        <span>No previous malaria infection</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="previous_malaria" value="yes" class="mr-2">
+                        <span>Yes, previous malaria infection</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Using Prevention Measures
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600">Are you using preventive measures (insect repellent, bed nets, antimalarial medication if in endemic area)?</p>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="prevention_measures" value="yes" checked class="mr-2">
+                        <span>Yes, using prevention measures</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="prevention_measures" value="no" class="mr-2">
+                        <span>No, not using prevention measures</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+                <p class="text-sm text-yellow-700">
+                    <strong>⚠️ Important:</strong> Malaria can be life-threatening if not treated promptly. If you have symptoms and have been in an endemic area, seek immediate medical attention.
+                </p>
+            </div>
+
+            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-200">
+                Assess Risk
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

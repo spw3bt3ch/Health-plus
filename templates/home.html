@@ -15,9 +15,10 @@
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div class="text-center">
             <!-- Badge -->
-            <div class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-semibold mb-6 animate-fade-in">
+            <div class="inline-flex items-center px-3 md:px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs md:text-sm font-semibold mb-6 animate-fade-in">
                 <i class="fas fa-shield-alt mr-2"></i>
-                <span>14 Comprehensive Health Assessments</span>
+                <span class="hidden sm:inline">25 Comprehensive Health Assessments</span>
+                <span class="sm:hidden">25 Assessments</span>
             </div>
 
             <!-- Main Headline -->
@@ -31,7 +32,7 @@
             <!-- Subheadline -->
             <p class="text-lg md:text-xl text-white/90 max-w-3xl mx-auto mb-6 animate-fade-in-up animation-delay-200">
                 Get instant, comprehensive health insights with our advanced assessment platform. 
-                <span class="font-semibold">14 key metrics</span> evaluated in minutes, not days.
+                <span class="font-semibold">25 key health metrics</span> evaluated in minutes, not days. Professional medical reports included with every assessment.
             </p>
 
             <!-- Key Benefits -->
@@ -73,7 +74,7 @@
             <!-- Statistics -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto animate-fade-in-up animation-delay-800">
                 <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-5 border border-white/20">
-                    <div class="text-3xl md:text-4xl font-bold text-white mb-1">14</div>
+                    <div class="text-3xl md:text-4xl font-bold text-white mb-1">25</div>
                     <div class="text-white/80 text-xs md:text-sm font-medium">Health Metrics</div>
                 </div>
                 <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 md:p-5 border border-white/20">
@@ -241,12 +242,39 @@
             <h3 class="text-xl font-semibold text-gray-900 mb-2">Vision & Hearing</h3>
             <p class="text-gray-600">Visual acuity and hearing screening tests.</p>
         </div>
+
+        <!-- Feature 7 -->
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+            <div class="bg-slate-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-male text-slate-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Cancer Risk Assessment</h3>
+            <p class="text-gray-600">Prostate and breast cancer risk evaluation.</p>
+        </div>
+
+        <!-- Feature 8 -->
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+            <div class="bg-emerald-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-shield-virus text-emerald-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">HIV Risk Assessment</h3>
+            <p class="text-gray-600">Confidential HIV risk evaluation and recommendations.</p>
+        </div>
+
+        <!-- Feature 9 -->
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300">
+            <div class="bg-fuchsia-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <i class="fas fa-baby text-fuchsia-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Pregnancy Health</h3>
+            <p class="text-gray-600">Pregnancy health monitoring and risk assessment.</p>
+        </div>
     </div>
 
     <!-- Assessment Categories -->
-    <div class="bg-white rounded-2xl shadow-xl p-8 mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Available Assessments</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8 mb-12">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6 md:mb-8 text-center">Available Assessments</h2>
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             <a href="{{ url_for('assessment_form', assessment_type='bmi') }}" class="block p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg hover:shadow-md transition">
                 <span class="font-semibold text-gray-800">BMI</span>
             </a>
@@ -289,14 +317,47 @@
             <a href="{{ url_for('assessment_form', assessment_type='hearing') }}" class="block p-4 bg-gradient-to-br from-rose-50 to-rose-100 rounded-lg hover:shadow-md transition">
                 <span class="font-semibold text-gray-800">Hearing</span>
             </a>
+            <a href="{{ url_for('assessment_form', assessment_type='prostate') }}" class="block p-4 bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Prostate</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='hiv') }}" class="block p-4 bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">HIV Risk</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='pregnancy') }}" class="block p-4 bg-gradient-to-br from-fuchsia-50 to-fuchsia-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Pregnancy</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='breast-cancer') }}" class="block p-4 bg-gradient-to-br from-pink-50 to-pink-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Breast Cancer</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='tuberculosis') }}" class="block p-4 bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Tuberculosis</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='covid19') }}" class="block p-4 bg-gradient-to-br from-red-50 to-red-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">COVID-19</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='malaria') }}" class="block p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Malaria</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='liver-problem') }}" class="block p-4 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Liver Health</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='hepatitis-b') }}" class="block p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Hepatitis B</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='diabetes') }}" class="block p-4 bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Diabetes</span>
+            </a>
+            <a href="{{ url_for('assessment_form', assessment_type='hydration') }}" class="block p-4 bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-lg hover:shadow-md transition">
+                <span class="font-semibold text-gray-800">Hydration</span>
+            </a>
         </div>
     </div>
 
     <!-- CTA Section -->
-    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-2xl p-12 text-center text-white">
-        <h2 class="text-4xl font-bold mb-4">Ready to Start Your Health Journey?</h2>
-        <p class="text-xl mb-8 opacity-90">Take our comprehensive assessments and get detailed insights into your health.</p>
-        <a href="{{ url_for('assessments') }}" class="bg-white text-blue-600 font-bold py-4 px-10 rounded-lg shadow-lg hover:bg-gray-100 transform hover:scale-105 transition duration-200 inline-block">
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-2xl p-8 md:p-12 text-center text-white">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Start Your Health Journey?</h2>
+        <p class="text-lg md:text-xl mb-8 opacity-90 max-w-3xl mx-auto">Take our comprehensive assessments and get detailed insights into your health. Each assessment includes a professional medical report with clinical interpretation and recommendations.</p>
+        <a href="{{ url_for('assessments') }}" class="bg-white text-blue-600 font-bold py-4 px-8 md:px-10 rounded-lg shadow-lg hover:bg-gray-100 transform hover:scale-105 transition duration-200 inline-block">
             Begin Assessment
         </a>
     </div>

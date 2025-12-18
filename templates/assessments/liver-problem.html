@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Liver Health Assessment - Health Plus{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+        <div class="text-center mb-6 md:mb-8">
+            <div class="bg-yellow-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-stethoscope text-yellow-600 text-2xl md:text-3xl"></i>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Liver Health Assessment</h1>
+            <p class="text-sm md:text-base text-gray-600">Evaluate your liver health risk factors</p>
+        </div>
+
+        <!-- Information Box -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg mb-6">
+            <div class="flex items-start">
+                <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-0.5"></i>
+                <div>
+                    <h3 class="font-semibold text-blue-900 mb-2">No Tests Required</h3>
+                    <p class="text-sm text-blue-800">This assessment evaluates your liver health risk based on symptoms, lifestyle factors, and medical history. You don't need any prior liver function tests to complete this assessment.</p>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('submit_assessment', assessment_type='liver-problem') }}" class="space-y-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Current Symptoms
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600 mb-2"><strong>Common liver problem symptoms:</strong></p>
+                    <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                        <li>Yellowing of skin or eyes (jaundice)</li>
+                        <li>Abdominal pain or swelling</li>
+                        <li>Dark urine</li>
+                        <li>Pale or clay-colored stools</li>
+                        <li>Chronic fatigue</li>
+                        <li>Nausea or vomiting</li>
+                        <li>Loss of appetite</li>
+                        <li>Easy bruising or bleeding</li>
+                        <li>Itchy skin</li>
+                        <li>Swelling in legs and ankles</li>
+                    </ul>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="symptoms" value="no" checked class="mr-2">
+                        <span>No symptoms</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="symptoms" value="yes" class="mr-2">
+                        <span>Yes, experiencing one or more symptoms</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label for="alcohol_use" class="block text-sm font-medium text-gray-700 mb-2">
+                    Alcohol Use
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600">Excessive alcohol consumption can damage the liver over time.</p>
+                </div>
+                <select id="alcohol_use" name="alcohol_use" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                    <option value="none">No alcohol use</option>
+                    <option value="moderate">Moderate use (within recommended limits)</option>
+                    <option value="heavy">Heavy use (exceeds recommended limits)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Medications That May Affect Liver
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600">Are you taking medications that may affect the liver (some pain relievers, antibiotics, cholesterol medications, etc.)?</p>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="medications" value="no" checked class="mr-2">
+                        <span>No medications that affect liver</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="medications" value="yes" class="mr-2">
+                        <span>Yes, taking such medications</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Family History of Liver Disease
+                </label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="family_history" value="no" checked class="mr-2">
+                        <span>No family history</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="family_history" value="yes" class="mr-2">
+                        <span>Yes, family history of liver disease</span>
+                    </label>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Previous Liver Issues
+                </label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="previous_liver_issues" value="no" checked class="mr-2">
+                        <span>No previous liver problems</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="previous_liver_issues" value="yes" class="mr-2">
+                        <span>Yes, previous liver problems</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-200">
+                Assess Liver Health
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Hydration Assessment - Health Plus{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8">
+        <div class="text-center mb-6 md:mb-8">
+            <div class="bg-cyan-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-tint text-cyan-600 text-2xl md:text-3xl"></i>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Hydration & Fluid Balance Assessment</h1>
+            <p class="text-sm md:text-base text-gray-600">Evaluate your hydration status</p>
+        </div>
+
+        <!-- Information Box -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg mb-6">
+            <div class="flex items-start">
+                <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-0.5"></i>
+                <div>
+                    <h3 class="font-semibold text-blue-900 mb-2">No Tests Required</h3>
+                    <p class="text-sm text-blue-800">This assessment evaluates your hydration status based on simple observations you can make yourself - urine color, thirst, fluid intake, and symptoms. No medical tests needed!</p>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('submit_assessment', assessment_type='hydration') }}" class="space-y-6">
+            <div>
+                <label for="urine_color" class="block text-sm font-medium text-gray-700 mb-2">
+                    Urine Color
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600 mb-2"><strong>What to look for:</strong></p>
+                    <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                        <li><strong>Pale/clear:</strong> Well hydrated</li>
+                        <li><strong>Light yellow:</strong> Adequately hydrated</li>
+                        <li><strong>Dark yellow/amber:</strong> Dehydrated - need more fluids</li>
+                    </ul>
+                    <p class="text-xs text-gray-600 mt-2"><strong>💡 Tip:</strong> Check your urine color throughout the day. First morning urine is typically darker and doesn't count.</p>
+                </div>
+                <select id="urine_color" name="urine_color" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                    <option value="pale">Pale/Clear (well hydrated)</option>
+                    <option value="light_yellow" selected>Light Yellow (adequately hydrated)</option>
+                    <option value="dark">Dark Yellow/Amber (dehydrated)</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="thirst_level" class="block text-sm font-medium text-gray-700 mb-2">
+                    Thirst Level
+                </label>
+                <select id="thirst_level" name="thirst_level" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                    <option value="not_thirsty">Not thirsty</option>
+                    <option value="normal" selected>Normal thirst</option>
+                    <option value="thirsty">Thirsty</option>
+                    <option value="very_thirsty">Very thirsty</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="activity_level" class="block text-sm font-medium text-gray-700 mb-2">
+                    Activity Level Today
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600">Higher activity levels increase fluid needs.</p>
+                </div>
+                <select id="activity_level" name="activity_level" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                    <option value="low">Low (sedentary day)</option>
+                    <option value="moderate" selected>Moderate (normal activity)</option>
+                    <option value="high">High (exercise, physical work, hot weather)</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="fluid_intake" class="block text-sm font-medium text-gray-700 mb-2">
+                    Fluid Intake Today
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600 mb-2"><strong>General guidelines:</strong></p>
+                    <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                        <li><strong>Adequate:</strong> 8-10 glasses (2-2.5 liters) of water/fluids</li>
+                        <li><strong>Moderate:</strong> 5-7 glasses</li>
+                        <li><strong>Low:</strong> Less than 5 glasses</li>
+                    </ul>
+                    <p class="text-xs text-gray-600 mt-2"><strong>Note:</strong> Needs increase with activity, heat, illness, or pregnancy.</p>
+                </div>
+                <select id="fluid_intake" name="fluid_intake" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                    <option value="adequate">Adequate (8+ glasses)</option>
+                    <option value="moderate" selected>Moderate (5-7 glasses)</option>
+                    <option value="low">Low (less than 5 glasses)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Dehydration Symptoms
+                </label>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-xs text-gray-600 mb-2"><strong>Common dehydration symptoms:</strong></p>
+                    <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                        <li>Dry mouth or sticky saliva</li>
+                        <li>Headache</li>
+                        <li>Dizziness or lightheadedness</li>
+                        <li>Fatigue</li>
+                        <li>Decreased urine output</li>
+                        <li>Dry skin</li>
+                        <li>Muscle cramps</li>
+                    </ul>
+                </div>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="radio" name="symptoms" value="no" checked class="mr-2">
+                        <span>No dehydration symptoms</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" name="symptoms" value="yes" class="mr-2">
+                        <span>Yes, experiencing one or more symptoms</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="bg-cyan-50 border-l-4 border-cyan-500 p-4 rounded">
+                <p class="text-sm text-cyan-700">
+                    <strong>💧 Hydration Tips:</strong> Drink water regularly throughout the day, not just when thirsty. Thirst is actually a late sign of dehydration. Include water-rich foods like fruits and vegetables in your diet.
+                </p>
+            </div>
+
+            <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-200">
+                Assess Hydration Status
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

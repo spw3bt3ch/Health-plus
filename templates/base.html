@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Health Plus - Comprehensive Health Assessment{% endblock %}</title>
+    <title>{% block title %}Health Radar - Comprehensive Health Assessment{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -18,20 +18,68 @@
     <nav class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
                 <div class="flex items-center space-x-3">
                     <i class="fas fa-heartbeat text-red-500 text-2xl"></i>
-                    <a href="{{ url_for('home') }}" class="text-2xl font-bold text-gray-800 hover:text-blue-600 transition">
-                        Health Plus
+                    <a href="{{ url_for('home') }}" class="text-xl md:text-2xl font-bold text-gray-800 hover:text-blue-600 transition">
+                        Health Radar
                     </a>
                 </div>
-                <div class="flex space-x-6">
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-6">
                     <a href="{{ url_for('home') }}" class="text-gray-700 hover:text-blue-600 font-medium transition">Home</a>
                     <a href="{{ url_for('assessments') }}" class="text-gray-700 hover:text-blue-600 font-medium transition">Assessments</a>
                     <a href="{{ url_for('results') }}" class="text-gray-700 hover:text-blue-600 font-medium transition">Results</a>
                 </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-700 hover:text-blue-600 focus:outline-none focus:text-blue-600 transition" aria-label="Toggle menu">
+                    <i class="fas fa-bars text-2xl" id="menu-icon"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-3 pt-2">
+                    <a href="{{ url_for('home') }}" class="text-gray-700 hover:text-blue-600 font-medium transition py-2 border-b border-gray-200">Home</a>
+                    <a href="{{ url_for('assessments') }}" class="text-gray-700 hover:text-blue-600 font-medium transition py-2 border-b border-gray-200">Assessments</a>
+                    <a href="{{ url_for('results') }}" class="text-gray-700 hover:text-blue-600 font-medium transition py-2">Results</a>
+                </div>
             </div>
         </div>
     </nav>
+    
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            
+            menu.classList.toggle('hidden');
+            
+            // Toggle icon between hamburger and X
+            if (menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
+        });
+        
+        // Close mobile menu when clicking on a link
+        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                const menu = document.getElementById('mobile-menu');
+                const icon = document.getElementById('menu-icon');
+                menu.classList.add('hidden');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+    </script>
 
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -56,7 +104,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                    <h3 class="text-xl font-bold mb-4">Health Plus</h3>
+                    <h3 class="text-xl font-bold mb-4">Health Radar</h3>
                     <p class="text-gray-400">Comprehensive health assessment platform for evaluating your overall wellness and fitness.</p>
                 </div>
                 <div>
@@ -80,7 +128,7 @@
                 </div>
             </div>
             <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400">
-                <p>&copy; 2024 Health Plus. All rights reserved.</p>
+                <p>&copy; 2025 Health Radar. All rights reserved.</p>
             </div>
         </div>
     </footer>
